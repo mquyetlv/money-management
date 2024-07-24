@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <div v-if="item.hasChild && item.toggle" class="ml-9 itemChild">
+            <div class="ml-9 itemChild" :class="{ togged: item.hasChild && item.toggle }">
                 <div
                     class="h-8 mt-1"
                     v-for="(child, indexChild) in item.children" 
@@ -91,6 +91,19 @@ import { reactive } from 'vue';
     cursor: pointer;
 }
 
+.itemChild {
+    transform: scaleY(0);
+    height: 0;
+    overflow: hidden;
+    transition: transform 0.25s ease-in-out;
+    transform-origin: top;
+}
+
+.itemChild.togged {
+    height: unset;
+    transform: scaleY(1);
+}
+
 .menu:hover {
     background-color: var(--primary-color);
     color: var(--text-white);
@@ -109,8 +122,10 @@ import { reactive } from 'vue';
     right: 8px;
     top: 50%;
     transform: translateY(-50%) rotateZ(0deg);
+    transition: transform 0.1s linear;
     width: 16px;
     height: 16px;
+    transform-origin: center;
 }
 
 .toggle {
