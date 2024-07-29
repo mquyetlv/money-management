@@ -1,7 +1,7 @@
 <template>
     <div class="w-[300px] bg-[#fff] absolute top-[80px] left-0 bottom-0 pl-10 pr-5 py-7">
-        <div v-for="(item, index) in menu" :key="index" class="mt-1">
-            <div class="flex items-center h-11 rounded-lg px-4 menu" @click="item.toggle = !item?.toggle">
+        <div v-for="(item, index) in menu" :key="index" class="mt-1 item-menu">
+            <div class="flex items-center h-11 rounded-lg px-4 menu">
                 <router-link class="flex items-center">
                     <ion-icon :name="item.icon" style="font-size: 22px;"></ion-icon>
                     <span class="ml-3 text-lg">{{ item.name }}</span>
@@ -69,6 +69,7 @@ import { reactive } from 'vue';
         },
     ]);
 
+
     interface Menu {
         name: string,
         path: string,
@@ -92,16 +93,9 @@ import { reactive } from 'vue';
 }
 
 .itemChild {
-    transform: scaleY(0);
-    height: 0;
+    max-height: 0;
     overflow: hidden;
-    transition: transform 0.25s ease-in-out;
-    transform-origin: top;
-}
-
-.itemChild.togged {
-    height: unset;
-    transform: scaleY(1);
+    transition: 1s ease-in-out;
 }
 
 .menu:hover {
