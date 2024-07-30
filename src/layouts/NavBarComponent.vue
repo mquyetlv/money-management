@@ -1,8 +1,8 @@
 <template>
     <div class="w-[300px] bg-[#fff] absolute top-[80px] left-0 bottom-0 pl-10 pr-5 py-7">
         <div v-for="(item, index) in menu" :key="index" class="mt-1 item-menu">
-            <div class="flex items-center h-11 rounded-lg px-4 menu">
-                <router-link class="flex items-center">
+            <div class="flex items-center h-11 rounded-lg px-4 menu" @click="$event =>  toggedMenu($event, item)">
+                <router-link class="flex items-center" :to="''">
                     <ion-icon :name="item.icon" style="font-size: 22px;"></ion-icon>
                     <span class="ml-3 text-lg">{{ item.name }}</span>
                 </router-link>
@@ -12,13 +12,13 @@
                 </div>
             </div>
 
-            <div class="ml-9 itemChild" :class="{ togged: item.hasChild && item.toggle }">
+            <div class="ml-9 itemChild">
                 <div
-                    class="h-8 mt-1"
+                    class="h-8 pt-1"
                     v-for="(child, indexChild) in item.children" 
                     :key="indexChild"
                 >
-                    <router-link class="pl-4 inline-block h-full w-full rounded-md">{{ child.name }}</router-link>
+                    <router-link :to="''" class="pl-4 inline-block h-full w-full rounded-md">{{ child.name }}</router-link>
                 </div>
             </div>
         </div>
@@ -69,6 +69,25 @@ import { reactive } from 'vue';
         },
     ]);
 
+    function toggedMenu(event: Event, item: Menu) {
+        item.toggle = !item.toggle;
+
+        const menuElement = (event.target as HTMLElement).closest('.item-menu');
+        if (!menuElement) {
+            return;
+        }
+
+        const itemChild = menuElement.querySelector('.itemChild') as HTMLElement;
+        if (!itemChild) {
+            return;
+        }
+
+        if (item.toggle) {
+            itemChild.style.maxHeight = itemChild.scrollHeight + 'px';
+        } else {
+            itemChild.style.maxHeight = '0';
+        }
+    }
 
     interface Menu {
         name: string,
@@ -95,7 +114,7 @@ import { reactive } from 'vue';
 .itemChild {
     max-height: 0;
     overflow: hidden;
-    transition: 1s ease-in-out;
+    transition: 0.25s ease-in-out;
 }
 
 .menu:hover {
