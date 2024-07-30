@@ -1,26 +1,37 @@
 <template>
     <div class="w-[300px] bg-[#fff] absolute top-[80px] left-0 bottom-0 pl-10 pr-5 py-7">
         <div v-for="(item, index) in menu" :key="index" class="mt-1 item-menu">
-            <div class="flex items-center h-11 rounded-lg px-4 menu" @click="$event =>  toggedMenu($event, item)">
-                <router-link class="flex items-center" :to="''">
-                    <ion-icon :name="item.icon" style="font-size: 22px;"></ion-icon>
-                    <span class="ml-3 text-lg">{{ item.name }}</span>
-                </router-link>
+            <template v-if="item.hasChild">
+                <div class="menu router-link">
+                    <div class="flex items-center" @click="$event => toggedMenu($event, item)">
+                        <ion-icon :name="item.icon" style="font-size: 22px;"></ion-icon>
+                        <span class="ml-3 text-lg">{{ item.name }}</span>
+                    </div>
 
-                <div v-if="item.hasChild" class="toggle-icon" :class="{ toggle: item.toggle }">
-                    <ion-icon name="chevron-forward-outline"></ion-icon>
-                </div>
-            </div>
+                    <div v-if="item.hasChild" class="toggle-icon" :class="{ toggle: item.toggle }">
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                    </div>
 
-            <div class="ml-9 itemChild">
-                <div
-                    class="h-8 pt-1"
-                    v-for="(child, indexChild) in item.children" 
-                    :key="indexChild"
-                >
-                    <router-link :to="''" class="pl-4 inline-block h-full w-full rounded-md">{{ child.name }}</router-link>
+                    <div class="ml-7 itemChild">
+                        <div
+                            v-for="(child, indexChild) in item.children" 
+                            :key="indexChild"
+                            class="pl-3 mt-1"
+                        >
+                            <router-link :to="child.routerLink" class="pl-4 inline-block h-full w-full rounded-md router-link child">{{ child.name }}</router-link>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </template>
+
+            <template v-else>
+                <div class="menu">
+                    <router-link class="flex items-center router-link" :to="item.routerLink">
+                        <ion-icon :name="item.icon" style="font-size: 22px;"></ion-icon>
+                        <span class="ml-3 text-lg">{{ item.name }}</span>
+                    </router-link>
+                </div>
+            </template>
         </div>
     </div>
 </template>
@@ -31,14 +42,14 @@ import { reactive } from 'vue';
     const menu: Menu[] = reactive([
         {
             name: 'Dashboard',
-            path: '',
+            routerLink: 'dashboard',
             icon: 'home-outline',
             toggle: false,
             hasChild: false,
         },
         {
             name: "My cards",
-            path: '',
+            routerLink: 'card-management',
             icon: 'card-outline',
             toggle: false,
             hasChild: false,
@@ -46,30 +57,18 @@ import { reactive } from 'vue';
         {
             name: "List management",
             icon: 'list-outline',
-            path: '',
             toggle: false,
             hasChild: true,
             children: [
-                { name: 'Income', path: '' },
-                { name: 'Outcome', path: '' },
-                { name: 'Saving', path: '' },
-            ]
-        },
-        {
-            name: "List management",
-            icon: 'list',
-            path: '',
-            toggle: false,
-            hasChild: true,
-            children: [
-                { name: 'Income', path: '' },
-                { name: 'Outcome', path: '' },
-                { name: 'Saving', path: '' },
+                { name: 'Income', routerLink: 'income' },
+                { name: 'Outcome', routerLink: 'outcome' },
+                { name: 'Saving', routerLink: 'saving' },
             ]
         },
     ]);
 
     function toggedMenu(event: Event, item: Menu) {
+        event.stopPropagation();
         item.toggle = !item.toggle;
 
         const menuElement = (event.target as HTMLElement).closest('.item-menu');
@@ -91,7 +90,7 @@ import { reactive } from 'vue';
 
     interface Menu {
         name: string,
-        path: string,
+        routerLink?: string,
         icon: string,
         hasChild: boolean,
         toggle?: boolean,
@@ -100,24 +99,35 @@ import { reactive } from 'vue';
 
     interface MenuChild {
         name: string,
-        path: string,
+        routerLink?: string,
     }
 </script>
 
 <style scoped>
-.menu,
-.itemChild {
+.router-link {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    @apply px-4 rounded-lg flex items-center h-11;
     color: var(--text-color);
     cursor: pointer;
+}
+
+.router-link.child {
+    @apply h-9 rounded;
 }
 
 .itemChild {
     max-height: 0;
     overflow: hidden;
     transition: 0.25s ease-in-out;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
 }
 
-.menu:hover {
+.router-link:hover {
     background-color: var(--primary-color);
     color: var(--text-white);
 }
@@ -143,5 +153,15 @@ import { reactive } from 'vue';
 
 .toggle {
     transform: translateY(-50%) rotateZ(-90deg);
+}
+
+.router-link-exact-active,
+.router-link:has(.router-link-exact-active) {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+}
+
+.router-link-exact-active.child.child {
+    background-color: var(--primary-color);
 }
 </style>

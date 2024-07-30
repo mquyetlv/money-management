@@ -12,7 +12,7 @@ const routes = [
         path: '/', 
         component: HomeLayout,
         children: [
-            { path: '', component: DashboardPage },
+            { path: 'dashboard', component: DashboardPage },
             { path: 'card-management', component: ManageCardPage },
             { path: 'income', component: ManageIncomePage },
             { path: 'outcome', component: ManageOutcomePage },
