@@ -5,7 +5,7 @@
         <NavBarComponent />
 
         <div class="main">
-
+            <RouterView />
         </div>
     </div>
 </template>
@@ -16,5 +16,12 @@
 </script>
 
 <style scoped>
-    
+    .main {
+        position: absolute;
+        top: 90px;
+        left: 300px;
+        bottom: 0;
+        right: 0;
+        padding: 26px;
+    }
 </style>
