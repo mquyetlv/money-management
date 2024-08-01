@@ -1,5 +1,8 @@
 <template>
-  <div class="wrap-card w-[380px] h-[170px] rounded-xl bg-slate-400 p-4 font-medium text-base flex flex-col justify-between">
+  <div 
+    :style="{ 'background-color': cardInfo.color || 'black' }"
+    class="wrap-card w-[340px] h-[170px] rounded-xl p-4 font-medium text-base flex flex-col justify-between"
+  >
     <div class="flex justify-between items-center">
       <span>{{ cardInfo.bankName }}</span>
       <ion-icon style="font-size: 24px;" name="radio-outline"></ion-icon>
