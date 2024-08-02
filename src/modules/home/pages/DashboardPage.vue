@@ -2,6 +2,7 @@
 import { reactive } from 'vue';
 import CardComponent from '../../../components/CardComponent.vue';
 import { ICard } from '../models';
+import CardSavingComponent from '../../../components/CardSavingComponent.vue';
 
 const cards: ICard[] = reactive<ICard[]>([
 	{ bankName: 'Vietcombank', name: 'LE VAN QUYET', cardNumber: '0932 4123 4143 1412', createdDate: '04/2020', color: 'green' },
@@ -28,6 +29,14 @@ const cards: ICard[] = reactive<ICard[]>([
 		</div>
 	</div>
 
+
+	<div class="mt-4">
+		<h2 class="font-medium text-xl mb-4 px-6">Savings</h2>
+
+		<div class="flex">
+			<CardSavingComponent />
+		</div>
+	</div>
 </template>
 
 <style scoped>
