@@ -5,8 +5,8 @@ import { ICard, ICardSaving } from '../models';
 import CardSavingComponent from '../../../components/CardSavingComponent.vue';
 
 const cards: ICard[] = reactive<ICard[]>([
-	{ bankName: 'Vietcombank', name: 'LE VAN QUYET', cardNumber: '0932 4123 4143 1412', createdDate: '04/2020', color: 'green' },
-	{ bankName: 'Vietcombank', name: 'LE VAN QUYET', cardNumber: '0932 4123 4143 1412', createdDate: '04/2020', color: '#0354b3' },
+	{ bankName: 'Vietcombank', name: 'LE VAN QUYET', cardNumber: '0932 4123 4143 1412', openDate: '04/2020', color: 'green' },
+	{ bankName: 'Vietcombank', name: 'LE VAN QUYET', cardNumber: '0932 4123 4143 1412', openDate: '04/2020', color: '#0354b3' },
 ]);
 
 const cardsSaving: ICardSaving[] = reactive<ICardSaving[]>([
