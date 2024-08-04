@@ -12,7 +12,7 @@
       <div class="inline-block">
         <p class="tracking-widest">{{ cardInfo.cardNumber }}</p>
 
-        <p><span style="font-size: 10px;">MEMBER SINCE: </span> {{ cardInfo.createdDate }}</p>
+        <p><span style="font-size: 10px;">MEMBER SINCE: </span> {{ cardInfo.openDate }}</p>
 
         <p>{{ cardInfo.name }}</p>
       </div>
