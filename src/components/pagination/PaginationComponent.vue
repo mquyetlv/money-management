@@ -19,9 +19,15 @@ import { Pagination } from './models/pagination.class';
         if (numberOfPages <= 4) return createArray(numberOfPages);
 
         else {
-            if (pagination.page >= 2) {
+            if (pagination.page >= 2 && pagination.page <= numberOfPages - 2) {
                 return createArray(pagination.page + 2, pagination.page - 2);
-            } else {
+            } 
+            
+            else if (pagination.page >= numberOfPages - 1) {
+                return createArray(numberOfPages, numberOfPages - 4)
+            }
+
+            else {
                 return createArray(4);
             }
         }
