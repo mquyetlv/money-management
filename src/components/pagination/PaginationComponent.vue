@@ -10,7 +10,12 @@ import { Pagination } from './models/pagination.class';
     const props = withDefaults(defineProps<IProps>(), {
         pageOptions: () => [10, 20, 50, 100],
         pagination: () => reactive(new Pagination(0)),
-   });
+    });
+
+    defineEmits<{
+        (e: 'changePageSize', pageSize: number): void,
+        (e: 'changePageNumber', pageNumber: number): void,
+    }>();
 
     const renderPage = computed(() => {
         const pagination = props.pagination;

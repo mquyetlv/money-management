@@ -48,6 +48,13 @@ const dataSource: ICard[] = reactive<ICard[]>([
 ]);
 
 const pagination: Reactive<Pagination> = reactive<Pagination>(new Pagination(126));
+
+function onChangePageSize(pageSize: number) {
+    console.log("Page Size: ", pageSize);
+}
+function onChangePageNumber(pageNumber: number) {
+    console.log("Page Number: ", pageNumber);
+}
 </script>
 
 <template>
@@ -59,6 +66,10 @@ const pagination: Reactive<Pagination> = reactive<Pagination>(new Pagination(126
             :data-source="dataSource"
         />
 
-        <PaginationComponent :pagination="pagination" />
+        <PaginationComponent 
+            :pagination="pagination" 
+            @changePageSize="onChangePageSize"
+            @changePageNumber="onChangePageNumber"
+        />
     </div>
 </template>
