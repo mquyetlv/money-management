@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { Reactive, reactive } from 'vue';
-import TableCommon from '../../../components/TableCommon.vue';
 import { ICard, IColumnTable } from '../models';
-import PaginationComponent from '../../../components/pagination/PaginationComponent.vue';
 import { Pagination } from '../../../components/pagination';
+import TableCommon from '../../../components/table/TableCommon.vue';
+import { IActionTable } from '../../../components/table/models';
+
+
+const actionsTable: IActionTable[] = [
+    { tooltip: 'Edit', icon: 'pencil-outline', action: onEdit },
+    { tooltip: 'View detail', icon: 'eye-outline', action: onView },
+];
+
 const columnsTable: IColumnTable[] = [
     {
         headerName: 'ID',
@@ -49,27 +56,28 @@ const dataSource: ICard[] = reactive<ICard[]>([
 
 const pagination: Reactive<Pagination> = reactive<Pagination>(new Pagination(126));
 
-function onChangePageSize(pageSize: number) {
-    console.log("Page Size: ", pageSize);
+function onEdit(rowData: any) {
+    console.log("On edit: ", rowData);
 }
-function onChangePageNumber(pageNumber: number) {
-    console.log("Page Number: ", pageNumber);
+
+function onView(rowData: any) {
+    console.log("On view: ", rowData);
+}
+
+function changePagination(pagination: Reactive<Pagination>) {
+    console.log("Page Size: ", pagination.size);
 }
 </script>
 
 <template>
     <div class="warp w-full h-full bg-[#fff] rounded-3xl p-6">
 
-        <TableCommon 
-            :table-name="'Danh sách thẻ'"
+        <TableCommon
             :columns="columnsTable"
             :data-source="dataSource"
-        />
-
-        <PaginationComponent 
-            :pagination="pagination" 
-            @changePageSize="onChangePageSize"
-            @changePageNumber="onChangePageNumber"
+            :pagination="pagination"
+            :actions-table="actionsTable"
+            @paginationChange="changePagination"
         />
     </div>
 </template>
