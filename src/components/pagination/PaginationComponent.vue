@@ -12,9 +12,8 @@ import { Pagination } from './models/pagination.class';
         pagination: () => reactive(new Pagination(0)),
     });
 
-    defineEmits<{
-        (e: 'changePageSize', pageSize: number): void,
-        (e: 'changePageNumber', pageNumber: number): void,
+    const emits = defineEmits<{
+        (e: 'paginationChange', pagination: Reactive<Pagination>): void,
     }>();
 
     const renderPage = computed(() => {
@@ -40,16 +39,18 @@ import { Pagination } from './models/pagination.class';
 
     function onChangePageSize(event: Event) {
         const size = (event.target as HTMLSelectElement).value;
+        props.pagination.page = 0;
         props.pagination.size = parseInt(size);
+        emits('paginationChange', props.pagination);
     }
 
     function onChangePageNumber(pageNumber: number) {
-        console.log("Page number: ", pageNumber);
         props.pagination.page = pageNumber;
+        emits('paginationChange', props.pagination);
     }
 
     function createArray(length: number, from = 0) {
-        const arr = [];
+        const arr: number[] = [];
         for(let i = from; i <= length; ++i) {
             arr.push(i);
         }
