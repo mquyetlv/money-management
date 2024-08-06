@@ -1,5 +1,7 @@
 @import './colors.css';
 @import './common.css';
+@import './form.css';
+@import './button.css';
 
 body {
     background-color: var(--background-color);
